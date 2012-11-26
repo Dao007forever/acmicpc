@@ -1,0 +1,41 @@
+#include <queue>
+#include <cstdio>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+const int MAXN = 200000 + 10;
+struct node {
+	int x, y, w;
+	node() {};
+	node(int x, int y, int w): x(x), y(y), w(w) {}  
+	bool operator < (node const &T) const {
+		return y > T.y;
+	}
+};
+
+struct ramp {
+	int x, d, t, p;
+	void init() {
+		scanf("%d%d%d%d", &x, &d, &t, &p);
+	}
+};
+
+struct Edge {
+	int u, v, w, z;
+};
+
+int n, m, L, st, ed, x, y, ret;
+int Head[MAXN], num;
+int f[MAXN], d[MAXN];
+ramp a[MAXN];
+priority_queue<node> q;
+
+void addedge(int u, int v, int w, int z) {
+	edge[num].u = u;
+	edge[num].v = v;
+	edge[num].w = w;
+	edge[num].z = z;
+	edge[num].next = Head[u];
+	Head[u] = num++;
+}

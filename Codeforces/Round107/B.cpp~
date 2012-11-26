@@ -1,0 +1,32 @@
+#include <cstdio>
+#include <iostream>
+
+#define mod 1000000007
+
+long long calc(int a, int p) {
+	long long ret = 1;
+	for (; p; a = a * a % mod, p >>= 1)
+		if (p & 1)
+			ret = ret * a % mod;
+	return ret;
+}
+
+int main() {
+	int n, m, k;
+	scanf("%d%d%d", &n, &m, &k);
+	long long ret;
+	if (k == 1 || k > n) {
+		ret = calc(m, n);
+		ret %= mod;
+	} else if (k == n) {
+		ret = calc(m, n / 2);
+		ret %= mod;
+	} else if (k & 1) {
+		ret = m + m * (m - 1);
+		ret %= mod;
+	} else {
+		ret = m % mod;
+	}
+	cout << ret << endl;
+	return 0;
+}

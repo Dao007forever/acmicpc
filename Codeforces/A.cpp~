@@ -1,0 +1,10 @@
+#Include <cstdio>
+
+int main()
+{
+	int a, n;
+	for (int i = 1; i <= n; i++)
+	{
+		
+	}
+}

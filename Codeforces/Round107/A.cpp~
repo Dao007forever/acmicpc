@@ -1,0 +1,52 @@
+#include <cmath>
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+const int maxn = 4000000;
+long long p;
+int prime[maxn], vis[maxn], t = 0;
+int tt[maxn];
+
+int check(long long x) {
+	int ret = 0;
+	for (int i = 0; i < t; i++) {
+			while (x % prime[i] == 0) {
+				tt[ret++] = prime[i];
+				x /= prime[i];
+			}
+			if (x == 1) break;
+	}
+	return ret;
+}
+
+void Prime() {
+	for (int i = 2; i < maxn; i++)
+		if (!vis[i]) {
+			for (int j = 2; i * j < maxn; j++)
+				vis[i * j] = 1;
+		}
+	for (int i = 2; i < maxn; i++)
+		if (!vis[i]) prime[t++] = i;
+}
+
+int main() {
+	freopen("in.txt", "r", stdin);
+	Prime();
+	cin >> p;
+	int ret = check(p);
+	
+	if (ret && ret % 2 == 0) {
+		cout << 2 << endl;
+	}
+	else {
+		cout << 1 << endl;
+		if (ret == 0) {
+			cout << 0 << endl;
+		}
+		else {
+			cout << (long long)tt[0] * tt[1] << endl;
+		}
+  	}
+	return 0;
+}

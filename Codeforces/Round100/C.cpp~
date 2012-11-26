@@ -1,0 +1,66 @@
+#include <cstdio>
+#include <vector>
+#include <cstring>
+#include <algorithm>
+using namespace std;
+
+int n;
+int r[111111];
+struct Node {
+	int x, y, z;
+}ans[111111];
+struct Nod {
+	int v, n;
+}p[111111];
+
+bool cmp(Nod a, Nod b) {
+	return a.n > b.n;
+}
+
+int main() {
+	freopen("in.txt", "r", stdin);
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++)
+		scanf("%d", &r[i]);
+	r[n] = -1;
+	sort(r, r + n);
+	int now = r[0], t = 1, cnt = 0;
+	for (int i = 1; i <= n; i++)
+		if (r[i] == now) {
+			t++;
+		}
+		else {
+			p[cnt].v = now;
+			p[cnt++].n = t;
+			now = r[i];
+			t = 1;
+		}
+	sort(p, p + cnt, cmp);
+	int ret = 0, x, y, z, num = cnt;
+	int i = 0;
+	t = 0;
+	while (1) {
+		if (t + num < 3) break;
+		if (p[i].n > 0) {
+			t++;
+			if (t == 1) x = p[i].v;
+			if (t == 2) y = p[i].v;
+			if (t == 3) z = p[i].v;
+			p[i].n--;
+			if (p[i].n == 0) num--;
+		}
+		if (t == 3) {
+			t = 0;
+			ans[ret].x = x; ans[ret].y = y; ans[ret++].z = z;
+		}
+		i = (i + 1) % n;
+	}
+	printf("%d\n", ret);
+	for (int i = 0; i < ret; i++) {
+		int a[5];
+		a[0] = ans[i].x; a[1] = ans[i].y; a[2] = ans[i].z;
+		sort(a, a + 3);
+		printf("%d %d %d\n", a[2], a[1], a[0]);
+	}
+	return 0;
+}

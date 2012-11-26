@@ -1,0 +1,82 @@
+/*
+ * Author : Yang Zhang
+ */
+#include <map>
+#include <set>
+#include <list>
+#include <cmath>
+#include <queue>
+#include <stack>
+#include <bitset>
+#include <vector>
+#include <cstdio>
+#include <string>
+#include <sstream>
+#include <cstdlib>
+#include <cstring>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+#define PB push_back
+#define MP make_pair
+#define SZ(v) ((int)(v).size())
+#define abs(x) ((x) > 0 ? (x) : -(x))
+typedef long long LL;
+
+int r, c, m;
+map<string, int> mp;
+char word[555][555];
+int h[10005];
+
+int main() {
+	freopen("C.in", "r", stdin);
+	int Test;
+	scanf("%d", &Test);
+	while (Test--) {
+		mp.clear();
+		scanf("%d%d%d", &r, &c, &m);
+		for (int i = 0; i < m; i++)
+			scanf("%s", word[i]);
+		for (int i = 0; i < m; i++) {
+			string s;
+			cin >> s;
+			mp[s] = i;
+		}
+		vector<pair<int, int> > ans(m);
+		memste(h, 0, sizeof(h));
+		for (int i = 0; i < r; i++)
+			for (int j = 0; j < c; j++) {
+				string s = word[i][j];
+				for (int k = 1; k < 20 && j + k < c; k++) {
+					s += word[i][j + k];
+					if (mp.find(s) != mp.end()) {
+						ans[mp[s]] = MP(i, j);
+						h[mp[s]] = 1;
+					}
+				}
+				s = word[i][j];
+				for (int k = 1; k < 20; i + k < r; k++) {
+					s += word[i + k][j];
+					if (mp.find(s) != mp.end()) {
+						ans[mp[s]] = MP(i, j);
+						h[mp[s]] = 1;
+					}
+				}
+				s = word[i][j];
+				for (int k = 1; k < 20 && i + k < r && j + k < c; k++) {
+					s += word[i + k][j + k];
+					if (mp.find(s) != mp.end()) {
+						ans[mp[s]] = MP(i, j);
+						h[mp[s]] = 1;
+					}
+				}
+			}
+		for (int i = 0; i < m; i++)
+			if (h[i]) {
+				printf("%d %d\n", ans[i].first, ans[i].second);
+			} else {
+				printf("-1 -1\n");
+			}
+	}
+	return 0;
+}

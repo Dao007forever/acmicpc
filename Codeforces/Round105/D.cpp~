@@ -1,0 +1,40 @@
+#include <cstdio>
+
+const int maxn = 1005;
+int w, b;
+bool B[maxn][maxn][2];
+double p[maxn][maxn][2];
+
+double F(int w, int b, int turn) {
+	if (w == 0) return 0.0;
+	if (b == 0) return 1.0;
+	if (B[w][b][turn]) return p[w][b][turn];
+
+	double ret = 0.0;
+	if (turn == 0) {
+		double wp = (double)w / (w + b);
+		double bp = 1.0 - wp;
+		ret += wp;
+		ret += bp * (1.0 - F(w, b - 1, 1));
+	}
+	else {
+		double wp = (double)w / (w + b);
+		double bp = 1.0 - wp;
+
+		double wd = (double)w / (w + b - 1);
+		double bd = 1.0 - wd;
+
+		ret += wp;
+		ret += bp * (wd * (1.0 - F(w - 1, b - 1, 0)) + bd * (b < 2 ? 0.0 : (1 - F(w, b - 2, 0))));
+	}
+	B[w][b][turn] = true;
+	p[w][b][turn] = ret;
+	return ret;
+}
+
+int main() {
+	freopen("in.txt", "r", stdin);
+	scanf("%d%d", &w, &b);
+	printf("%.9f\n", F(w, b, 0));
+	return 0;
+}

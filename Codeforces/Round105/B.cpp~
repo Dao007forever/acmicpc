@@ -1,0 +1,40 @@
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int vp, vd, t, f, c;
+
+int main() {
+	freopen("in.txt", "r", stdin);
+	scanf("%d%d%d%d%d", &vp, &vd, &t, &f, &c);
+	if (vd <= vp) {
+		printf("0\n");
+		return 0;
+	}
+	int sd = 0, sp = 0, flag = 0, ret = 0, use = 0;
+	for (int i = 1; sp < c; i++) {
+		sp += vp;
+		if (sp >= c) break;
+		if (i == t + 1) flag = 1;
+		if (flag) {
+			if (use) {
+				sd -= vd;
+				if (sd == 0) {
+					use = 0;
+					int cnt = 0;
+					for (; cnt < f; cnt++)
+						i++, sp += vp;
+				}
+			}
+			else {
+				sd += vd;
+				if (sd >= sp) {
+					ret++;
+					use = 1;
+				}
+			}
+		}
+	}
+	printf("%d\n", ret);
+	return 0;
+}

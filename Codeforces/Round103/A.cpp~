@@ -1,0 +1,23 @@
+#include <cstdio>
+
+int n;
+int a[111];
+
+int main() {
+	scanf("%d", &n);
+	int min = 10000, max = 0;
+	int k1, k2;
+	for (int i = 0; i < n; i++) {
+		scanf("%d", &a[i]);
+		if (a[i] <= min) {
+			min = a[i];
+			k2 = i;
+		}
+		if (a[i] > max) {
+			max = a[i];
+			k1 = i;
+		}
+	}
+	printf("%d\n", k1 - 0 + n - 1 - k2);
+	return 0;
+}

@@ -1,0 +1,46 @@
+#include <cstdio>
+#include <camth>
+#include <algorithm>
+using namespace std;
+
+struct Circle {
+	int x, y, r;
+}c[1111];
+int n;
+int x1, x2, y1, y2;
+
+bool inside(Circle c, int x, int y) {
+	if (r * r >= (c.x - x) * (c.x - x) + (c.y - y) * (c.y - y)) return true;
+	return false;
+}
+
+bool check(int x, int y) {
+	for (int i = 0; i < n; i++)
+		if (inside(c[i], x, y)) return false;
+	return true;
+}
+
+int main() {
+	scanf("%d%d%d%d", &x1, &y1, &x2, &y2);
+	scanf("%d", &n);
+	for (int i = 0; i < n; i++) {
+		scanf("%d%d%d", &c[i].x, &c[i].y, &c[i].r);
+	}
+	int ret = 0;
+	int maxx = max(x1, x2), minx = min(x1, x2);
+	int maxy = max(y1, y2), miny = min(y1, y2);
+	for (int i = miny + 1; i < maxy; i++) {
+		if (check(minx, i)) ret++;
+		if (check(maxx, i)) ret++;
+	}
+	for (int i = minx + 1; i < maxx; i++) {
+		if (check(i, miny)) ret++;
+		if (check(i, maxy)) ret++;
+	}
+	if (check(minx, miny)) ret++;
+	if (check(minx, maxy)) ret++;
+	if (check(maxx, miny)) ret++;
+	if (check(maxx, maxy)) ret++;
+	printf("%d\n", ret);
+	return 0;
+}
